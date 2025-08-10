@@ -1,0 +1,4 @@
+{
+  "using": "css selector",
+  "value": "new UiSelector().text('Please enter a valid email address')"
+}
