@@ -1,4 +1,6 @@
+import formPage from "../pageobjects/form.page";
 import LoginPage from "../pageobjects/login.page";
+import HomePage from "../pageobjects/home.page";
 
 describe("Login Tests", () => {
   const loginPage = new LoginPage();
@@ -12,5 +14,13 @@ describe("Login Tests", () => {
   it("Login with Invalid Credentials", async () => {
     await loginPage.loginWithValidCredentials("hmgumyu56h", "secr");
     await loginPage.verifyErrorMessage();
+  });
+});
+
+describe("Form Tests", () => {
+  const homepage = new HomePage();
+  it("Fill up form values", async () => {
+    await homepage.FormButton.click();
+    await formPage.fillFormData("hello there!");
   });
 });
