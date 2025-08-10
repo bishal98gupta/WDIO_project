@@ -1,11 +1,6 @@
-export default class LoginPage {
-  get HomePageTitle() {
-    return $("//android.widget.TextView[@text='WEBDRIVER']");
-  }
+import Page from "./home.page";
 
-  get loginbuttonfromHomePage() {
-    return $("~Login");
-  }
+export default class LoginPage extends Page {
   get userNamefield() {
     return $("~input-email");
   }
@@ -44,7 +39,7 @@ export default class LoginPage {
   }
 
   async loginWithValidCredentials(email: string, password: string) {
-    await this.loginbuttonfromHomePage.click();
+    await this.loginButtonfromHomePage.click();
     await this.userNamefield.setValue(email);
     await this.passwordfield.setValue(password);
     await this.loginButton.click();
