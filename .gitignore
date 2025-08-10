@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# Test reports
+allure-results/
+
+# Logs
+logs/
+*.log
+
+#app
+app/
+*.apk

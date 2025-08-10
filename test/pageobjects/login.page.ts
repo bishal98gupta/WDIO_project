@@ -1,6 +1,6 @@
-import Page from "./home.page";
+import homePage from "./home.page";
 
-export default class LoginPage extends Page {
+export default class LoginPage extends homePage {
   get userNamefield() {
     return $("~input-email");
   }
