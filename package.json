@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "wdio": "wdio run ./wdio.conf.ts"
+    "wdio": "wdio run ./wdio.conf.ts",
+    "clean-allure": "rimraf allure-results allure-report",
+    "test-report": "npx wdio run wdio.conf.ts && allure generate allure-results --clean -o allure-report"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +26,7 @@
     "appium": "^2.19.0",
     "appium-uiautomator2-driver": "^4.2.7",
     "appium-wait-plugin": "^3.0.2",
+    "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "webdriverio": "^9.18.4"
