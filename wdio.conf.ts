@@ -56,15 +56,8 @@ export const config: WebdriverIO.Config = {
     {
       // capabilities for local Appium web tests on an Android Emulator
       platformName: "Android",
-      "appium:platformVersion": "16",
-      "appium:deviceName": "emulator-5554",
-      // "appium:app": path.resolve(
-      //   __dirname,
-      //   "./app/Android.SauceLabs.Mobile.app.2.7.1.apk"
-      // ),
-      // "appium:automationName": "UiAutomator2",
-      // "appium:appPackage": "com.swaglabsmobileapp",
-      // "appium:appActivity": "com.swaglabsmobileapp.SplashActivity",
+      "appium:platformVersion": "16", // 15 for real device, 16 for emulator
+      "appium:deviceName": "emulator-5554", // SM-S921B for real device, emualor-5554 for emulator
       "appium:app": path.resolve(
         __dirname,
         "./app/android.wdio.native.app.v1.0.8.apk"
@@ -72,6 +65,15 @@ export const config: WebdriverIO.Config = {
       "appium:automationName": "UiAutomator2",
       "appium:appPackage": "com.wdiodemoapp",
       "appium:noReset": false,
+
+      // For Sauce Labs,use the following capabilities:
+      // "appium:app": path.resolve(
+      //   __dirname,
+      //   "./app/Android.SauceLabs.Mobile.app.2.7.1.apk"
+      // ),
+      // "appium:automationName": "UiAutomator2",
+      // "appium:appPackage": "com.swaglabsmobileapp",
+      // "appium:appActivity": "com.swaglabsmobileapp.SplashActivity",
     },
   ],
 

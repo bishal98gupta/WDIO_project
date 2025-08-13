@@ -1,6 +1,7 @@
 import formPage from "../pageobjects/form.page";
 import LoginPage from "../pageobjects/login.page";
 import HomePage from "../pageobjects/home.page";
+import swipePage from "../pageobjects/swipe.page";
 
 describe("Login Tests", () => {
   const loginPage = new LoginPage();
@@ -22,5 +23,20 @@ describe("Form Tests", () => {
   it("Fill up form values", async () => {
     await homepage.FormButton.click();
     await formPage.fillFormData("hello there!");
+  });
+});
+
+describe("Swipe Tests", () => {
+  const homepage = new HomePage();
+  it("Horizontal left swipes", async () => {
+    await homepage.swipeButton.click();
+    await swipePage.swipeThroughCardsAndVerifyTexts([
+      "FULLY OPEN SOURCE",
+      "GREAT COMMUNITY",
+      "JS.FOUNDATION",
+      "SUPPORT VIDEOS",
+      "EXTENDABLE",
+    ]);
+    await swipePage.scrollDownvalidation();
   });
 });

@@ -39,7 +39,7 @@ class FormPage extends HomePage {
     return $('android=new UiSelector().resourceId("android:id/button1")');
   }
 
-  public get inactiveButton() {
+  get inactiveButton() {
     return $(
       'android=new UiSelector().className("android.view.ViewGroup").instance(19)'
     );
