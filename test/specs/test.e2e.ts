@@ -2,7 +2,7 @@ import formPage from "../pageobjects/form.page";
 import LoginPage from "../pageobjects/login.page";
 import HomePage from "../pageobjects/home.page";
 import swipePage from "../pageobjects/swipe.page";
-
+import dragPage from "../pageobjects/drag.page";
 describe("Login Tests", () => {
   const loginPage = new LoginPage();
 
@@ -38,5 +38,16 @@ describe("Swipe Tests", () => {
       "EXTENDABLE",
     ]);
     await swipePage.scrollDownvalidation();
+  });
+});
+
+describe("drag & drop Tests", () => {
+  const homepage = new HomePage();
+  it("drag & drop", async () => {
+    await homepage.dragButton.click();
+    await dragPage.dragAndDropElement();
+    await dragPage.verifySuccessMessage(
+      "You made it, click retry if you want to try it again."
+    );
   });
 });
