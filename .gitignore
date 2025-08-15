@@ -3,6 +3,7 @@ node_modules/
 
 # Test reports
 allure-results/
+allure-report/
 
 # Logs
 logs/
