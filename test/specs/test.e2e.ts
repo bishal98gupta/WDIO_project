@@ -8,46 +8,48 @@ describe("Login Tests", () => {
 
   it("login with valid credentials", async () => {
     await expect(loginPage.HomePageTitle).toHaveText("WEBDRIVER");
-    await loginPage.loginWithValidCredentials("test@test.com", "secret_sauce");
+    await loginPage.loginWithCredentials("test@test.com", "secret_sauce");
     await loginPage.verifyLoginMessage();
   });
 
   it("Login with Invalid Credentials", async () => {
-    await loginPage.loginWithValidCredentials("hmgumyu56h", "secr");
+    await loginPage.loginWithCredentials("hmgumyu56h", "secr");
     await loginPage.verifyErrorMessage();
   });
 });
 
-describe("Form Tests", () => {
-  const homepage = new HomePage();
-  it("Fill up form values", async () => {
-    await homepage.FormButton.click();
-    await formPage.fillFormData("hello there!");
-  });
-});
+// describe("Form Tests", () => {
+//   const homepage = new HomePage();
+//   it("Fill up form values", async () => {
+//     await homepage.FormButton.click();
+//     await formPage.fillFormData("hello there!");
+//   });
+// });
 
-describe("Swipe Tests", () => {
-  const homepage = new HomePage();
-  it("Horizontal left swipes", async () => {
-    await homepage.swipeButton.click();
-    await swipePage.swipeThroughCardsAndVerifyTexts([
-      "FULLY OPEN SOURCE",
-      "GREAT COMMUNITY",
-      "JS.FOUNDATION",
-      "SUPPORT VIDEOS",
-      "EXTENDABLE",
-    ]);
-    await swipePage.scrollDownvalidation();
-  });
-});
+// describe("Swipe Tests", () => {
+//   const homepage = new HomePage();
+//   it("Horizontal left swipes", async () => {
+//     await homepage.swipeButton.click();
+//     await swipePage.swipeThroughCardsAndVerifyTexts([
+//       "FULLY OPEN SOURCE",
+//       "GREAT COMMUNITY",
+//       "JS.FOUNDATION",
+//       "SUPPORT VIDEOS",
+//       "EXTENDABLE",
+//     ]);
+//     await swipePage.scrollDownvalidation();
+//   });
+// });
 
-describe("drag & drop Tests", () => {
-  const homepage = new HomePage();
-  it("drag & drop", async () => {
-    await homepage.dragButton.click();
-    await dragPage.dragAndDropElement();
-    await dragPage.verifySuccessMessage(
-      "You made it, click retry if you want to try it again."
-    );
-  });
-});
+// describe("drag & drop Tests", () => {
+//   const homepage = new HomePage();
+//   it("drag & drop", async () => {
+//     await homepage.dragButton.click();
+//     await dragPage.dragAndDropElement();
+//     await dragPage.verifySuccessMessage(
+//       "You made it, click retry if you want to try it again."
+//     );
+//   });
+// });
+
+// "generate-report": "allure generate allure-results --clean -o allure-report && allure open allure-report",

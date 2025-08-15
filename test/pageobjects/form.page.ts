@@ -1,4 +1,5 @@
 import HomePage from "./home.page";
+import Allure from "@wdio/allure-reporter";
 
 class FormPage extends HomePage {
   get inputField() {
@@ -47,6 +48,7 @@ class FormPage extends HomePage {
 
   async fillFormData(inputValue: string) {
     await this.inputField.waitForExist({ timeout: 3000 });
+    Allure.addStep("Form filling started");
     await this.inputField.setValue(inputValue);
     await expect(this.inputTextResultField).toBeExisting();
     await expect(this.inputTextResultField).toHaveText(inputValue);
@@ -69,6 +71,7 @@ class FormPage extends HomePage {
     );
     await this.activePopupOKButton.click();
     await expect(this.inactiveButton).toBeDisplayed();
+    Allure.addStep("Form filling completed");
   }
 }
 

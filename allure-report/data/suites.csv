@@ -1,0 +1,3 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","6808","Login with Invalid Credentials","","Fri Aug 15 15:42:43 IST 2025","passed","Fri Aug 15 15:42:50 IST 2025","","Login Tests","",""
+"","12564","login with valid credentials","","Fri Aug 15 15:42:31 IST 2025","passed","Fri Aug 15 15:42:43 IST 2025","","Login Tests","",""

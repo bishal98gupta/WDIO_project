@@ -1,3 +1,5 @@
+import Allure from "@wdio/allure-reporter";
+
 class dragPage {
   get dragendropText() {
     return $('android=new UiSelector().text("Drag and Drop")');
@@ -68,6 +70,7 @@ class dragPage {
     );
 
     await expect(this.dragendropText).toBeExisting();
+    Allure.addStep("Drag and drop started");
     await sourceElement1.dragAndDrop(targetElement1);
     await sourceElement2.dragAndDrop(targetElement2);
     await sourceElement3.dragAndDrop(targetElement3);
@@ -77,9 +80,16 @@ class dragPage {
     await sourceElement7.dragAndDrop(targetElement7);
     await sourceElement8.dragAndDrop(targetElement8);
     await sourceElement9.dragAndDrop(targetElement9);
+    Allure.addStep("Drag and drop completed");
+    Allure.addAttachment(
+      "D&D screenshot",
+      await browser.takeScreenshot(),
+      "image/png"
+    );
   }
 
   async verifySuccessMessage(successtext: string) {
+    Allure.addStep("Verifying success message");
     const congratulationsImage = await $("android.widget.ImageView");
     const otherText = await $(
       '//android.widget.TextView[@text="You made it, click retry if you want to try it again."]'
@@ -89,8 +99,11 @@ class dragPage {
     );
     await congratulationsImage.waitForExist({ timeout: 10000 });
     await expect(otherText).toHaveText(successtext);
+    Allure.addStep("Success message verified");
+    Allure.addStep("Clicking retry button");
     await retryButton.click();
     await expect(this.dragendropText).toBeDisplayed();
+    Allure.addStep("Retry button clicked");
     await driver.pause(1500);
   }
 }

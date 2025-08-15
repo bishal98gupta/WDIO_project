@@ -1,4 +1,6 @@
 import * as path from "path";
+import * as fs from "fs";
+import allure from "@wdio/allure-reporter";
 
 export const config: WebdriverIO.Config = {
   //
@@ -161,7 +163,17 @@ export const config: WebdriverIO.Config = {
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter
-  reporters: ["spec", ["allure", { outputDir: "allure-results" }]],
+  reporters: [
+    "spec",
+    [
+      "allure",
+      {
+        outputDir: "allure-results",
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+      },
+    ],
+  ],
 
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
@@ -264,13 +276,50 @@ export const config: WebdriverIO.Config = {
    * @param {boolean} result.passed    true if test has passed, otherwise false
    * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
    */
+  beforeTest: async function () {
+    // Start recording before every test
+    await driver.startRecordingScreen();
+  },
+
   afterTest: async function (
     test,
     context,
     { error, result, duration, passed, retries }
   ) {
+    // Stop and save recording after every test
+    const video = await driver.stopRecordingScreen();
+
+    // Make a nice file name
+    const safefileName = test.title.replace(/ /g, "_");
+    const videoName = `${safefileName}.mp4`;
+    const videoPath = path.join(__dirname, "allure-results", videoName);
+
+    // Save the video
+    fs.writeFileSync(videoPath, video, "base64");
+
+    // Attach video to Allure report
+    await allure.addAttachment(
+      "Test Execution Video",
+      fs.readFileSync(videoPath),
+      "video/mp4"
+    );
     if (!passed) {
-      await browser.takeScreenshot();
+      // If the test failed, take a screenshot
+      const screenshotName = `${safefileName}.png`;
+      const screenshotPath = path.join(
+        __dirname,
+        "allure-results",
+        screenshotName
+      );
+      const screenshot = await driver.takeScreenshot();
+      // Save the screenshot
+      fs.writeFileSync(screenshotPath, screenshot, "base64");
+      // Attach screenshot to Allure report
+      await allure.addAttachment(
+        "Error Screenshot",
+        fs.readFileSync(screenshotPath),
+        "image/png"
+      );
     }
   },
 
