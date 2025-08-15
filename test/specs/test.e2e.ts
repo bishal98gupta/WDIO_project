@@ -51,5 +51,3 @@ describe("Login Tests", () => {
 //     );
 //   });
 // });
-
-// "generate-report": "allure generate allure-results --clean -o allure-report && allure open allure-report",

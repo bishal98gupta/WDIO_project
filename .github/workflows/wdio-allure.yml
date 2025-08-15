@@ -2,7 +2,7 @@ name: WDIO Tests with Allure Report
 
 on:
   schedule:
-    - cron: "0 10 * * *"  # runs daily at 5:00 UTC
+    - cron: "0 10 * * *" # runs daily at 5:00 UTC
   workflow_dispatch: # allows manual trigger
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
         run: npm install
 
       - name: Run WDIO tests (always continue)
-        run:  npm-s -c clean-allure wdio generate-report
+        run: npm-s -c clean-allure wdio generate-report
 
       - name: Upload Allure report as artifact
         uses: actions/upload-artifact@v4
@@ -31,10 +31,12 @@ jobs:
           name: allure-report
           path: allure-report
 
-      # Optional: Publish Allure report to GitHub Pages
-      - name: Deploy Allure report to GitHub Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Send Slack notification
+        uses: slackapi/slack-github-action@v1.27.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
+          payload: |
+            {
+              "text": "🚀 WDIO Allure Report generated. Download it from GitHub Actions artifacts.\nGo to: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
