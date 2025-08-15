@@ -22,8 +22,22 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run WDIO tests (always continue)
-        run: npm run test-report
+      # Install and run Android Emulator
+      - name: Run Android Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30 # Change to match WDIO, recommend >= 29
+          target: google_apis
+          arch: x86_64
+          profile: pixel
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          disable-animations: true
+          script: |
+            adb devices
+            npm run test-report # Your WDIO command
+
+      # - name: Run WDIO tests (always continue)
+      #   run: npm run test-report
 
       - name: Upload Allure report as artifact
         uses: actions/upload-artifact@v4
