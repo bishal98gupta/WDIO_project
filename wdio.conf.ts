@@ -58,7 +58,7 @@ export const config: WebdriverIO.Config = {
     {
       // capabilities for local Appium web tests on an Android Emulator
       platformName: "Android",
-      "appium:platformVersion": "16", // 15 for real device, 16 for emulator
+      "appium:platformVersion": "11", // 15 for real device, 16 for emulator
       "appium:deviceName": "emulator-5554", // SM-S921B for real device, emualor-5554 for emulator
       "appium:app": path.resolve(
         __dirname,
