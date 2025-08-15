@@ -1,4 +1,5 @@
 import homePage from "./home.page";
+import Allure from "@wdio/allure-reporter";
 
 export default class LoginPage extends homePage {
   get userNamefield() {
@@ -38,11 +39,15 @@ export default class LoginPage extends homePage {
     );
   }
 
-  async loginWithValidCredentials(email: string, password: string) {
+  async loginWithCredentials(email: string, password: string) {
+    Allure.addStep("Valid Login Test started");
     await this.loginButtonfromHomePage.click();
+    await expect(this.userNamefield).toBeExisting();
     await this.userNamefield.setValue(email);
+    // await expect(this.passwordfield).toBeExisting();
     await this.passwordfield.setValue(password);
     await this.loginButton.click();
+    Allure.addStep("Login button clicked");
   }
 
   async verifyLoginMessage() {
@@ -50,12 +55,14 @@ export default class LoginPage extends homePage {
     await expect(this.loginAlertHeader).toBeExisting();
     await expect(this.loginAlertMessage).toHaveText("You are logged in!");
     await this.okButton.click();
+    Allure.addStep("Valid login Test completed");
   }
 
   async verifyErrorMessage() {
     await this.userNameFieldError.waitForExist({ timeout: 3000 });
     await expect(this.userNameFieldError).toBeExisting();
     await expect(this.passwordFieldError).toBeExisting();
+    Allure.addStep("Invalid login Test completed");
   }
 }
 
