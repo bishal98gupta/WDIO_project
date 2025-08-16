@@ -30,18 +30,26 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio
           disable-animations: true
           script: |
             echo "Waiting for emulator to boot..."
             adb wait-for-device
-            # Extra wait to make sure boot animation is done
             bootCompleted=""
             until [ "$bootCompleted" = "1" ]; do
-              bootCompleted=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
-              sleep 5
+            bootCompleted=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
+            sleep 5
             done
-            echo "Emulator is fully booted!"
+            echo "Emulator reported boot completed!"
+
+            echo "Adding extra wait time for system to stabilize..."
+            sleep 30
+
+            echo "Unlocking screen..."
+            adb shell input keyevent 82
+
+            echo "Double-checking device state..."
+            adb devices
 
       - name: Run WDIO tests (always continue)
         run: npm run test-report
