@@ -33,11 +33,18 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           disable-animations: true
           script: |
-            adb devices
-            npm run test-report # Your WDIO command
+            echo "Waiting for emulator to boot..."
+            adb wait-for-device
+            # Extra wait to make sure boot animation is done
+            bootCompleted=""
+            until [ "$bootCompleted" = "1" ]; do
+              bootCompleted=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
+              sleep 5
+            done
+            echo "Emulator is fully booted!"
 
-      # - name: Run WDIO tests (always continue)
-      #   run: npm run test-report
+      - name: Run WDIO tests (always continue)
+        run: npm run test-report
 
       - name: Upload Allure report as artifact
         uses: actions/upload-artifact@v4
