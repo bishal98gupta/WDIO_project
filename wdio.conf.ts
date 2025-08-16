@@ -139,7 +139,11 @@ export const config: WebdriverIO.Config = {
     //   },
     // ],
     //"visual",
-    //"browserstack",
+    // "browserstack"{
+    //   app:
+    //   buildidentifier: "wdio-appium",
+    //   browserstackLocal: true,
+    // },
   ],
 
   // Framework you want to run your specs with.
