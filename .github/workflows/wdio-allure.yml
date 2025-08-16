@@ -27,7 +27,7 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 30 # Change to match WDIO, recommend >= 29
-          target: google_apis
+          target: default
           arch: x86_64
           profile: pixel
           emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
@@ -46,9 +46,9 @@ jobs:
             sleep 30
 
             echo "Unlocking screen..."
-            adb shell input keyevent 82
+            adb shell input keyevent 82 || true
 
-            echo "Double-checking device state..."
+            echo "Emulator is ready!"
             adb devices
 
       - name: Run WDIO tests (always continue)
