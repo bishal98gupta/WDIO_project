@@ -35,13 +35,14 @@ jobs:
           script: |
             echo "Waiting for emulator to boot..."
             adb wait-for-device
+
             bootCompleted=""
             until [ "$bootCompleted" = "1" ]; do
-            bootCompleted=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
-            sleep 5
+              bootCompleted=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
+              sleep 5
             done
-            echo "Emulator reported boot completed!"
 
+            echo "Emulator reported boot completed!"
             echo "Adding extra wait time for system to stabilize..."
             sleep 30
 
