@@ -5,10 +5,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "wdio": "wdio run ./wdio.conf.ts",
+    "wdio-bs": "wdio run ./wdio.conf.bs.ts",
     "clean-allure": "rimraf allure-results allure-report",
     "generate-report": "allure generate allure-results --clean -o allure-report",
-    "test-report": "run-s -c clean-allure wdio generate-report",
-    "test-browserstack": "wdio run ./wdio.conf.bs.ts"
+    "test-local": "run-s -c clean-allure wdio generate-report",
+    "test-browserstack": "run-s -c clean-allure wdio-bs generate-report"
   },
   "keywords": [],
   "author": "",
