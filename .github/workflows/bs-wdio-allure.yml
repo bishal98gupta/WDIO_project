@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "0 10 * * *" # runs daily at 10:00 UTC
   workflow_dispatch: # allows manual trigger
+  push:
+    branches:
+      - main
+      - feature/workflows
+  pull_request:
 
 jobs:
   wdio-tests:
