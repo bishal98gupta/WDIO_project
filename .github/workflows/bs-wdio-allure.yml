@@ -1,0 +1,62 @@
+name: WDIO Tests with Allure Report (BrowserStack)
+
+on:
+  schedule:
+    - cron: "0 10 * * *" # runs daily at 10:00 UTC
+  push:
+    branches:
+      - main
+  workflow_dispatch: # allows manual trigger
+
+jobs:
+  wdio-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run WDIO tests on BrowserStack
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+        run: |
+          echo "Running WDIO tests on BrowserStack..."
+          npm run wdio-bs
+
+      - name: Install Allure CLI
+        run: |
+          echo "Installing Allure CLI..."
+          npm install -g allure-commandline --save-dev
+          allure --version
+
+      - name: Generate Allure report
+        if: always() # Ensure this runs even if previous steps fail
+        run: |
+          echo "Generating Allure report..."
+          npm run generate-report
+
+      - name: Upload Allure report
+        uses: actions/upload-artifact@v4
+        if: always() # Ensure this runs even if previous steps fail
+        with:
+          name: allure-report
+          path: allure-report/
+
+      - name: Send Slack notification
+        uses: slackapi/slack-github-action@v1.27.0
+        if: always() # Ensure this runs even if previous steps fail
+        with:
+          payload: |
+            {
+              "text": "🚀 WDIO Allure Report generated (BrowserStack). Download it from GitHub Actions artifacts.\nGo to: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}

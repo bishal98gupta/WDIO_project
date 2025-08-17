@@ -1,24 +1,18 @@
-import * as path from "path";
-import * as fs from "fs";
-import allure from "@wdio/allure-reporter";
-// import type { Options } from "@wdio/types";
 require("dotenv").config();
-export const config: WebdriverIO.Config = {
+
+exports.config = {
   //
   // ====================
   // Runner Configuration
   // ====================
   // WebdriverIO supports running e2e tests as well as unit and component tests.
   runner: "local",
-  // autoCompileOpts: {
-  //   autoCompile: true,
-  //   tsNodeOpts: {
-  //     project: "./test/tsconfig.json",
-  //     transpileOnly: true,
-  //   },
-  // },
+  user: process.env.BROWSERSTACK_USERNAME,
+  key: process.env.BROWSERSTACK_ACCESS_KEY,
 
-  port: 4723,
+  // tsConfigPath: "./test/tsconfig.json",
+
+  // hostname: "hub.browserstack.com",
   //
   // ==================
   // Specify Test Files
@@ -55,7 +49,7 @@ export const config: WebdriverIO.Config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 10,
+  maxInstances: 1,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -63,16 +57,13 @@ export const config: WebdriverIO.Config = {
   //
   capabilities: [
     {
-      // capabilities for local Appium web tests on an Android Emulator
-      platformName: "Android",
-      "appium:platformVersion": "11", // 15 for real device, 16 for emulator
-      "appium:deviceName": "emulator-5554", // SM-S921B for real device, emualor-5554 for emulator
-      "appium:app": path.resolve(
-        __dirname,
-        "./app/android.wdio.native.app.v1.0.8.apk"
-      ),
+      platformName: "android",
+      "appium:app": process.env.APP_ID,
+      "appium:deviceName": "Google Pixel 5",
+      "appium:platformVersion": "11.0",
       "appium:automationName": "UiAutomator2",
-      "appium:appPackage": "com.wdiodemoapp",
+      "appium:realMobile": true,
+      "appium:fullReset": true,
       "appium:noReset": false,
 
       // For Sauce Labs,use the following capabilities:
@@ -117,7 +108,7 @@ export const config: WebdriverIO.Config = {
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
   // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
   // gets prepended directly.
-  // baseUrl: 'http://localhost:8080',
+  // baseUrl: "http://localhost",
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
@@ -138,15 +129,15 @@ export const config: WebdriverIO.Config = {
   services: [
     // Required for downloading chromedriver for web automation
     // [
-    "appium",
+    //"appium",
     //   {
     //     args: {
     //       allowInsecure: "chromedriver_autodownload",
     //     },
     //   },
     // ],
+    //"visual",
     "browserstack",
-    "visual",
   ],
 
   // Framework you want to run your specs with.
@@ -283,52 +274,6 @@ export const config: WebdriverIO.Config = {
    * @param {boolean} result.passed    true if test has passed, otherwise false
    * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
    */
-  beforeTest: async function () {
-    // Start recording before every test
-    await driver.startRecordingScreen();
-  },
-
-  afterTest: async function (
-    test,
-    context,
-    { error, result, duration, passed, retries }
-  ) {
-    // Stop and save recording after every test
-    const video = await driver.stopRecordingScreen();
-
-    // Make a nice file name
-    const safefileName = test.title.replace(/ /g, "_");
-    const videoName = `${safefileName}.mp4`;
-    const videoPath = path.join(__dirname, "allure-results", videoName);
-
-    // Save the video
-    fs.writeFileSync(videoPath, video, "base64");
-
-    // Attach video to Allure report
-    await allure.addAttachment(
-      "Test Execution Video",
-      fs.readFileSync(videoPath),
-      "video/mp4"
-    );
-    if (!passed) {
-      // If the test failed, take a screenshot
-      const screenshotName = `${safefileName}.png`;
-      const screenshotPath = path.join(
-        __dirname,
-        "allure-results",
-        screenshotName
-      );
-      const screenshot = await driver.takeScreenshot();
-      // Save the screenshot
-      fs.writeFileSync(screenshotPath, screenshot, "base64");
-      // Attach screenshot to Allure report
-      await allure.addAttachment(
-        "Error Screenshot",
-        fs.readFileSync(screenshotPath),
-        "image/png"
-      );
-    }
-  },
 
   /**
    * Hook that gets executed after the suite has ended

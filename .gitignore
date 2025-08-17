@@ -12,3 +12,6 @@ logs/
 #app
 app/
 *.apk
+
+#environment files
+.env

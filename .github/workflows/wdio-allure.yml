@@ -22,6 +22,39 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # Install and run Android Emulator
+      - name: Run Android Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30 # Change to match WDIO, recommend >= 29
+          target: default
+          arch: x86_64
+          profile: pixel
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          disable-animations: true
+          script: |
+            echo "Waiting for emulator to boot..."
+            adb wait-for-device
+
+            bash -c '
+              bootCompleted=""
+              until [ "$bootCompleted" = "1" ]; do
+                bootCompleted=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d "\r")
+                sleep 5
+              done
+              echo "Emulator reported boot completed!"
+            '
+
+            echo "Emulator reported boot completed!"
+            echo "Adding extra wait time for system to stabilize..."
+            sleep 30
+
+            echo "Unlocking screen..."
+            adb shell input keyevent 82 || true
+
+            echo "Emulator is ready!"
+            adb devices
+
       - name: Run WDIO tests (always continue)
         run: npm run test-report
 
