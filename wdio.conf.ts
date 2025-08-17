@@ -145,6 +145,7 @@ export const config: Options.Testrunner = {
     //     },
     //   },
     // ],
+    "browserstack",
     "visual",
   ],
 
