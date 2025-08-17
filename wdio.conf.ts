@@ -1,22 +1,22 @@
 import * as path from "path";
 import * as fs from "fs";
 import allure from "@wdio/allure-reporter";
-import type { Options } from "@wdio/types";
+// import type { Options } from "@wdio/types";
 require("dotenv").config();
-export const config: Options.Testrunner = {
+export const config: WebdriverIO.Config = {
   //
   // ====================
   // Runner Configuration
   // ====================
   // WebdriverIO supports running e2e tests as well as unit and component tests.
   runner: "local",
-  autoCompileOpts: {
-    autoCompile: true,
-    tsNodeOpts: {
-      project: "./test/tsconfig.json",
-      transpileOnly: true,
-    },
-  },
+  // autoCompileOpts: {
+  //   autoCompile: true,
+  //   tsNodeOpts: {
+  //     project: "./test/tsconfig.json",
+  //     transpileOnly: true,
+  //   },
+  // },
 
   port: 4723,
   //
