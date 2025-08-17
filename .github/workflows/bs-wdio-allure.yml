@@ -3,12 +3,11 @@ name: WDIO Tests with Allure Report (BrowserStack)
 on:
   schedule:
     - cron: "0 10 * * *" # runs daily at 10:00 UTC
-  workflow_dispatch: # allows manual trigger
   push:
     branches:
       - main
       - feature/workflows
-  pull_request:
+  workflow_dispatch: # allows manual trigger
 
 jobs:
   wdio-tests:
@@ -33,14 +32,26 @@ jobs:
           echo "Running WDIO tests on BrowserStack..."
           npm run test-browserstack
 
-      - name: Upload Allure report as artifact
+      - name: Install Allure CLI
+        run: |
+          echo "Installing Allure CLI..."
+          npm install -g allure-commandline --save-dev
+          allure --version
+
+      - name: Generate Allure report
+        run: |
+          echo "Generating Allure report..."
+          npm run generate-report
+
+      - name: Upload Allure report
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
-          path: allure-report
+          path: allure-report/
 
       - name: Send Slack notification
         uses: slackapi/slack-github-action@v1.27.0
+        if: always() # Ensure this runs even if previous steps fail
         with:
           payload: |
             {

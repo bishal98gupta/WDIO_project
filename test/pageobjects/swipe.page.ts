@@ -31,7 +31,7 @@ class swipePage extends HomePage {
           direction: "left",
           scrollableElement: this.firstCard,
         });
-        await driver.pause(1000);
+        await driver.pause(3000);
       }
     }
     Allure.addStep("Swiping through cards completed");

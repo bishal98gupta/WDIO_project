@@ -15,7 +15,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/node": "^24.1.0",
+    "@types/node": "^22.15.0",
     "@wdio/allure-reporter": "^9.18.0",
     "@wdio/appium-service": "^9.18.4",
     "@wdio/browserstack-service": "^9.18.4",
@@ -33,10 +33,10 @@
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
-    "webdriverio": "^9.18.4"
+    "webdriverio": "^8.30.0"
   },
   "dependencies": {
-    "uiautomator2": "^1.0.2",
-    "dotenv": "17.2.1"
+    "dotenv": "17.2.1",
+    "uiautomator2": "^1.0.2"
   }
 }
