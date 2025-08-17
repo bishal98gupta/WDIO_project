@@ -30,7 +30,7 @@ jobs:
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
         run: |
           echo "Running WDIO tests on BrowserStack..."
-          npm run test-browserstack
+          npm run wdio-bs
 
       - name: Install Allure CLI
         run: |
