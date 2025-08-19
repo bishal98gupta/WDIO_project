@@ -41,7 +41,7 @@ jobs:
         if: always() # Ensure this runs even if previous steps fail
         run: |
           echo "Generating Allure report..."
-          npm run generate-report
+          allure generate --clean --single-file allure-results
 
       - name: Upload Allure report
         uses: actions/upload-artifact@v4
