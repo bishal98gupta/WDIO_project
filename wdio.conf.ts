@@ -10,6 +10,7 @@ export const config: WebdriverIO.Config = {
   // ====================
   // WebdriverIO supports running e2e tests as well as unit and component tests.
   runner: "local",
+  tsConfigPath: "./test/tsconfig.json",
   // autoCompileOpts: {
   //   autoCompile: true,
   //   tsNodeOpts: {
@@ -145,8 +146,8 @@ export const config: WebdriverIO.Config = {
     //     },
     //   },
     // ],
-    "browserstack",
-    "visual",
+    //"browserstack",
+    //"visual",
   ],
 
   // Framework you want to run your specs with.

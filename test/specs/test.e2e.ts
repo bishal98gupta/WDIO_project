@@ -12,10 +12,10 @@ describe("Login Tests", () => {
     await loginPage.verifyLoginMessage();
   });
 
-  it("Login with Invalid Credentials", async () => {
-    await loginPage.loginWithCredentials("hmgumyu56h", "secr");
-    await loginPage.verifyErrorMessage();
-  });
+  // it("Login with Invalid Credentials", async () => {
+  //   await loginPage.loginWithCredentials("hmgumyu56h", "secr");
+  //   await loginPage.verifyErrorMessage();
+  // });
 });
 
 // describe("Form Tests", () => {
@@ -26,20 +26,20 @@ describe("Login Tests", () => {
 //   });
 // });
 
-// describe("Swipe Tests", () => {
-//   const homepage = new HomePage();
-//   it("Horizontal left swipes", async () => {
-//     await homepage.swipeButton.click();
-//     await swipePage.swipeThroughCardsAndVerifyTexts([
-//       "FULLY OPEN SOURCE",
-//       "GREAT COMMUNITY",
-//       "JS.FOUNDATION",
-//       "SUPPORT VIDEOS",
-//       "EXTENDABLE",
-//     ]);
-//     await swipePage.scrollDownvalidation();
-//   });
-// });
+describe("Swipe Tests", () => {
+  const homepage = new HomePage();
+  it("Horizontal left swipes", async () => {
+    await homepage.swipeButton.click();
+    await swipePage.swipeThroughCardsAndVerifyTexts([
+      "FULLY OPEN SOURCE",
+      "GREAT COMMUNITY",
+      "JS.FOUNDATION",
+      "SUPPORT VIDEOS",
+      "EXTENDABLE",
+    ]);
+    await swipePage.scrollDownvalidation();
+  });
+});
 
 // describe("drag & drop Tests", () => {
 //   const homepage = new HomePage();

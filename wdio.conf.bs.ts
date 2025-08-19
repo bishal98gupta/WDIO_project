@@ -59,8 +59,8 @@ exports.config = {
     {
       platformName: "android",
       "appium:app": process.env.APP_ID,
-      "appium:deviceName": "Google Pixel 5",
-      "appium:platformVersion": "11.0",
+      "appium:deviceName": "Google Pixel 8 Pro",
+      "appium:platformVersion": "14.0",
       "appium:automationName": "UiAutomator2",
       "appium:realMobile": true,
       "appium:fullReset": true,
