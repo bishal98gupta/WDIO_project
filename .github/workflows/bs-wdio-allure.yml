@@ -33,6 +33,7 @@ jobs:
           npm run wdio-bs
 
       - name: Install Allure CLI
+        if: always() # Ensure this runs even if previous steps fail
         run: |
           echo "Installing Allure CLI..."
           npm install -g allure-commandline --save-dev
