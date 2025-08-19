@@ -25,6 +25,7 @@ jobs:
 
       - name: Run WDIO tests on BrowserStack
         env:
+          APP_ID: ${{ secrets.BROWSERSTACK_APP_ID }}
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
         run: |
@@ -32,6 +33,7 @@ jobs:
           npm run wdio-bs
 
       - name: Install Allure CLI
+        if: always() # Ensure this runs even if previous steps fail
         run: |
           echo "Installing Allure CLI..."
           npm install -g allure-commandline --save-dev

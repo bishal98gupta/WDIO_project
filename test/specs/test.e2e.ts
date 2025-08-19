@@ -12,19 +12,19 @@ describe("Login Tests", () => {
     await loginPage.verifyLoginMessage();
   });
 
-  // it("Login with Invalid Credentials", async () => {
-  //   await loginPage.loginWithCredentials("hmgumyu56h", "secr");
-  //   await loginPage.verifyErrorMessage();
-  // });
+  it("Login with Invalid Credentials", async () => {
+    await loginPage.loginWithCredentials("hmgumyu56h", "secr");
+    await loginPage.verifyErrorMessage();
+  });
 });
 
-// describe("Form Tests", () => {
-//   const homepage = new HomePage();
-//   it("Fill up form values", async () => {
-//     await homepage.FormButton.click();
-//     await formPage.fillFormData("hello there!");
-//   });
-// });
+describe("Form Tests", () => {
+  const homepage = new HomePage();
+  it("Fill up form values", async () => {
+    await homepage.FormButton.click();
+    await formPage.fillFormData("hello there!");
+  });
+});
 
 describe("Swipe Tests", () => {
   const homepage = new HomePage();
