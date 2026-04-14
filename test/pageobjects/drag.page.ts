@@ -33,8 +33,8 @@ class dragPage {
     await expect(this.dragendropText).toBeExisting();
     Allure.addStep("Drag and drop started");
     for (let i = 0; i < this.sourceLocators.length; i++) {
-      const sourceElement = await $(this.sourceLocators[i]);
-      const targetElement = await $(this.targetLocators[i]);
+      const sourceElement = $(this.sourceLocators[i]);
+      const targetElement = $(this.targetLocators[i]);
       await this.performdragAndDrop(sourceElement, targetElement);
     }
 
@@ -78,11 +78,11 @@ class dragPage {
   }
 
   async verifySuccessMessage(successtext: string) {
-    const congratulationsImage = await $("android.widget.ImageView");
-    const otherText = await $(
+    const congratulationsImage = $("android.widget.ImageView");
+    const otherText = $(
       '//android.widget.TextView[@text="You made it, click retry if you want to try it again."]'
     );
-    const retryButton = await $(
+    const retryButton = $(
       '//android.view.ViewGroup[@content-desc="button-Retry"]/android.view.ViewGroup'
     );
     await congratulationsImage.waitForExist({ timeout: 10000 });

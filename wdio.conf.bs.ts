@@ -1,6 +1,8 @@
-require("dotenv").config();
+import dotenv from 'dotenv'
 
-exports.config = {
+dotenv.config();
+
+export const config = {
   //
   // ====================
   // Runner Configuration

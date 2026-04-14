@@ -16,7 +16,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/node": "^24.1.0",
+    "@types/node": "^24.12.2",
     "@wdio/allure-reporter": "^9.18.0",
     "@wdio/appium-service": "^9.18.4",
     "@wdio/browserstack-service": "^9.18.4",

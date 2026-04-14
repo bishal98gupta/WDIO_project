@@ -1,8 +1,8 @@
 name: WDIO Tests with Allure Report (BrowserStack)
 
 on:
- # schedule:
-  #  - cron: "0 10 * * *" # runs daily at 10:00 UTC
+  schedule:
+    - cron: "30 5 * * *" # runs daily at 10:00 UTC
   # push:
   #   branches:
   #     - main
@@ -51,6 +51,7 @@ jobs:
         with:
           name: allure-report
           path: allure-report/
+          retention-days: 15
 
       - name: Send Slack notification
         uses: slackapi/slack-github-action@v1.27.0
