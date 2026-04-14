@@ -8,10 +8,10 @@ class FormPage extends HomePage {
   get inputTextResultField() {
     return $("~input-text-result");
   }
-  get raioButton() {
+  get radioButton() {
     return $("~switch");
   }
-  get raioButtonMessage() {
+  get radioButtonMessage() {
     return $("~switch-text");
   }
 
@@ -52,11 +52,11 @@ class FormPage extends HomePage {
     await this.inputField.setValue(inputValue);
     await expect(this.inputTextResultField).toBeExisting();
     await expect(this.inputTextResultField).toHaveText(inputValue);
-    await expect(this.raioButtonMessage).toHaveText(
+    await expect(this.radioButtonMessage).toHaveText(
       "Click to turn the switch ON"
     );
-    await this.raioButton.click();
-    await expect(this.raioButtonMessage).toHaveText(
+    await this.radioButton.click();
+    await expect(this.radioButtonMessage).toHaveText(
       "Click to turn the switch OFF"
     );
     await this.dropdownField.click();

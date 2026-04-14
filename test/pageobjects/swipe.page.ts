@@ -15,12 +15,6 @@ class swipePage extends HomePage {
   }
 
   async swipeThroughCardsAndVerifyTexts(expectedTexts: string[]) {
-    //for fetching all textViews inside each cards
-    // const textViews = await this.firstCard.$$("//android.widget.TextView");
-    // for (const tv of textViews) {
-    //   const cardText = await tv.getText();
-    //   console.log("card text:", cardText);
-    // }
     Allure.addStep("Swiping through cards started");
     for (const expectedText of expectedTexts) {
       const cardText = await this.firstCard
@@ -36,7 +30,7 @@ class swipePage extends HomePage {
 
   async scrollDownvalidation() {
     Allure.addStep("Scrolling down to validate the end text");
-    await scrollUntilVisible(this.foundMe, "down", 10);
+    await scrollUntilVisible(this.foundMe, "up", 10);
     await expect(this.foundMe).toBeDisplayed();
     await expect(this.foundMe).toHaveText("You found me!!!");
     Allure.addStep("Scrolling down validation completed");

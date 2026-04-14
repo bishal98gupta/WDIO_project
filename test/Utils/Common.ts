@@ -4,10 +4,6 @@ export async function swipe(
   direction: "left" | "right" | "up" | "down",
   element?: ChainablePromiseElement
 ) {
-  //   let startX = location.x + size.width / 2;
-  //   let endX = startX;
-  //   let startY = location.y + size.height / 2;
-  //   let endY = startY;
   let startX: number, endX: number, startY: number, endY: number;
 
   switch (direction) {
@@ -32,15 +28,15 @@ export async function swipe(
     case "up": {
       const size = await driver.getWindowSize();
       startX = endX = size.width / 2;
-      startY = size.height * 0.3;
-      endY = size.height * 0.7;
+      startY = size.height * 0.5;
+      endY = size.height * 0.1;
       break;
     }
     case "down": {
       const size = await driver.getWindowSize();
       startX = endX = size.width / 2;
-      startY = size.height * 0.95;
-      endY = size.height * 0.1;
+      startY = size.height * 0.3;
+      endY = size.height * 0.7;
       break;
     }
   }
@@ -61,7 +57,6 @@ export async function swipe(
   ]);
 
   await driver.pause(800);
-  //   await driver.releaseActions();
 }
 
 export async function scrollUntilVisible(
@@ -77,9 +72,7 @@ export async function scrollUntilVisible(
         console.log(`Element found after ${i + 1} swipes`);
         break;
       }
-    } catch (error) {
-      // Element not found, continue swiping
-    }
+    } catch (error) {}
     await swipe(direction);
   }
   if (!isVisible) {
