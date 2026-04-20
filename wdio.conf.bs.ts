@@ -1,7 +1,9 @@
-import dotenv from 'dotenv'
+import axios from "axios";
+import allure from "@wdio/allure-reporter";
+import { driver, browser } from "@wdio/globals";
+import dotenv from "dotenv";
 
 dotenv.config();
-
 export const config = {
   //
   // ====================
@@ -170,7 +172,7 @@ export const config = {
       {
         outputDir: "allure-results",
         disableWebdriverStepsReporting: true,
-        disableWebdriverScreenshotsReporting: false,
+        disableWebdriverScreenshotsReporting: true,
       },
     ],
   ],
@@ -277,6 +279,17 @@ export const config = {
    * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
    */
 
+  afterTest: async function (test: any, { passed }: any) {
+    if (!passed) {
+      const screenshot = await (driver as any).takeScreenshot();
+      allure.addAttachment(
+        `Screenshot - ${test.title}`,
+        Buffer.from(screenshot, "base64"),
+        "image/png",
+      );
+    }
+  },
+
   /**
    * Hook that gets executed after the suite has ended
    * @param {object} suite suite details
@@ -307,8 +320,7 @@ export const config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that ran
    */
-  // afterSession: function (config, capabilities, specs) {
-  // },
+
   /**
    * Gets executed after all workers got shut down and the process is about to exit. An error
    * thrown in the onComplete hook will result in the test run failing.

@@ -1,5 +1,4 @@
 import * as path from "path";
-import * as fs from "fs";
 import allure from "@wdio/allure-reporter";
 // import type { Options } from "@wdio/types";
 require("dotenv").config();
@@ -70,7 +69,7 @@ export const config: WebdriverIO.Config = {
       "appium:deviceName": "emulator-5554", // SM-S921B for real device, emualor-5554 for emulator
       "appium:app": path.resolve(
         __dirname,
-        "./app/android.wdio.native.app.v1.0.8.apk"
+        "./app/android.wdio.native.app.v1.0.8.apk",
       ),
       "appium:automationName": "UiAutomator2",
       "appium:appPackage": "com.wdiodemoapp",
@@ -178,7 +177,7 @@ export const config: WebdriverIO.Config = {
       {
         outputDir: "allure-results",
         disableWebdriverStepsReporting: true,
-        disableWebdriverScreenshotsReporting: false,
+        disableWebdriverScreenshotsReporting: true,
       },
     ],
   ],
@@ -289,44 +288,22 @@ export const config: WebdriverIO.Config = {
     await driver.startRecordingScreen();
   },
 
-  afterTest: async function (
-    test,
-    context,
-    { error, result, duration, passed, retries }
-  ) {
-    // Stop and save recording after every test
-    const video = await driver.stopRecordingScreen();
-
-    // Make a nice file name
-    const safefileName = test.title.replace(/ /g, "_");
-    const videoName = `${safefileName}.mp4`;
-    const videoPath = path.join(__dirname, "allure-results", videoName);
-
-    // Save the video
-    fs.writeFileSync(videoPath, video, "base64");
-
-    // Attach video to Allure report
-    await allure.addAttachment(
-      "Test Execution Video",
-      fs.readFileSync(videoPath),
-      "video/mp4"
-    );
+  afterTest: async function (test, {  passed }) {
     if (!passed) {
-      // If the test failed, take a screenshot
-      const screenshotName = `${safefileName}.png`;
-      const screenshotPath = path.join(
-        __dirname,
-        "allure-results",
-        screenshotName
-      );
+      // Screenshot 
       const screenshot = await driver.takeScreenshot();
-      // Save the screenshot
-      fs.writeFileSync(screenshotPath, screenshot, "base64");
-      // Attach screenshot to Allure report
-      await allure.addAttachment(
-        "Error Screenshot",
-        fs.readFileSync(screenshotPath),
-        "image/png"
+      const videoBase64 = await driver.stopRecordingScreen();
+      allure.addAttachment(
+        `Screenshot - ${test.title}`,
+        Buffer.from(screenshot, "base64"),
+        "image/png",
+      );
+
+      // Video (ONLY on failure)
+      allure.addAttachment(
+        `Video - ${test.title}`,
+        Buffer.from(videoBase64, "base64"),
+        "video/mp4",
       );
     }
   },
