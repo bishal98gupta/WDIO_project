@@ -28,7 +28,7 @@ export async function swipe(
     case "up": {
       const size = await driver.getWindowSize();
       startX = endX = size.width / 2;
-      startY = size.height * 0.5;
+      startY = size.height * 0.55;
       endY = size.height * 0.1;
       break;
     }
