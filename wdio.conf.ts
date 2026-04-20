@@ -290,7 +290,7 @@ export const config: WebdriverIO.Config = {
 
   afterTest: async function (test, {  passed }) {
     if (!passed) {
-      // 📸 Screenshot (best practice)
+      // Screenshot 
       const screenshot = await driver.takeScreenshot();
       const videoBase64 = await driver.stopRecordingScreen();
       allure.addAttachment(
