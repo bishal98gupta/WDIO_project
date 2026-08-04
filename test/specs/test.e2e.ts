@@ -1,8 +1,9 @@
-import formPage from "../pageobjects/form.page";
-import LoginPage from "../pageobjects/login.page";
-import HomePage from "../pageobjects/home.page";
-import swipePage from "../pageobjects/swipe.page";
-import dragPage from "../pageobjects/drag.page";
+import LoginPage from "../../pageobjects/login.page";
+import formPage from "../../pageobjects/form.page";
+import HomePage from "../../pageobjects/home.page";
+import swipePage from "../../pageobjects/swipe.page";
+import dragPage from "../../pageobjects/drag.page";
+
 describe("Login Tests", () => {
   const loginPage = new LoginPage();
 
@@ -47,7 +48,7 @@ describe("drag & drop Tests", () => {
     await homepage.dragButton.click();
     await dragPage.dragandDropElements();
     await dragPage.verifySuccessMessage(
-      "You made it, click retry if you want to try it again."
+      "You made it, click retry if you want to try it again.",
     );
   });
 });
