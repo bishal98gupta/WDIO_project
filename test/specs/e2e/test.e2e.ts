@@ -1,8 +1,8 @@
-import LoginPage from "../../pageobjects/login.page";
-import formPage from "../../pageobjects/form.page";
-import HomePage from "../../pageobjects/home.page";
-import swipePage from "../../pageobjects/swipe.page";
-import dragPage from "../../pageobjects/drag.page";
+import LoginPage from "../../../pageobjects/login.page";
+import formPage from "../../../pageobjects/form.page";
+import HomePage from "../../../pageobjects/home.page";
+import swipePage from "../../../pageobjects/swipe.page";
+import dragPage from "../../../pageobjects/drag.page";
 
 describe("Login Tests", () => {
   const loginPage = new LoginPage();
