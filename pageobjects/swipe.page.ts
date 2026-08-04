@@ -1,6 +1,6 @@
 import HomePage from "./home.page";
 // import { ChainablePromiseElement } from "webdriverio";
-import { swipe, scrollUntilVisible } from "../Utils/Common";
+import { swipe, scrollUntilVisible } from "../Utils/commonUtils";
 import Allure from "@wdio/allure-reporter";
 
 class swipePage extends HomePage {
